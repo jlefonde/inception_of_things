@@ -1,0 +1,6 @@
+---
+- hosts: all
+  tasks:
+    - name: Debug inventory
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }}"
