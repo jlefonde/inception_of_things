@@ -3,12 +3,10 @@
 
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/focal64"
-  config.vm.box_version = "20240821.0.1"
 
   config.vm.provider :virtualbox do |vb|
     vb.cpus = 1
     vb.memory = 512
-    vb.gui = true
   end
 
   config.vm.define :jlefondeS do |jlefondeS|
@@ -28,7 +26,11 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provision :ansible do |ansible|
-    ansible.playbook = "playbook.yml"
-    ansible.verbose = true
+    ansible.playbook = "./confs/provision.yml"
+    ansible.groups = {
+      "servers" => ["jlefondeS"],
+      "workers" => ["jlefondeSW"],
+    }
+    ansible.verbose = "-vvv"
   end
 end
