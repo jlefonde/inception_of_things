@@ -27,7 +27,7 @@
       ansible.builtin.shell:
         cmd: "cat /var/lib/rancher/k3s/server/node-token"
       register: k3s_token
-      delegate_to: "{{ hostvars['jlefondeS']['host_ip'] }}"
+      delegate_to: "{{ groups['servers'][0] }}"
 
     - name: Ensure K3s is running in agent mode
       ansible.builtin.shell:
