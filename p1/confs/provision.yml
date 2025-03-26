@@ -23,7 +23,7 @@
   become: true
 
   tasks:
-    - name: Wait for K3s server to be ready
+    - name: Wait for K3s server node-token file to exist
       ansible.builtin.wait_for:
         path: "/var/lib/rancher/k3s/server/node-token"
         timeout: 30
@@ -40,6 +40,6 @@
         cmd: "/usr/local/bin/k3s.sh"
       environment:
         K3S_URL: "https://{{ hostvars['jlefondeS']['host_ip'] }}:6443"
-        K3S_TOKEN: "{{ k3s_token }}"
+        K3S_TOKEN: "{{ k3s_token.stdout }}"
         INSTALL_K3S_EXEC: "--flannel-iface eth1"
 
