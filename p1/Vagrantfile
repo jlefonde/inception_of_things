@@ -32,8 +32,8 @@ Vagrant.configure("2") do |config|
       "workers" => ["jlefondeSW"],
     }
     ansible.host_vars = {
-      "jlefondeS" => {"host_ip" => "192.168.56.110"},
-      "jlefondeSW" => {"host_ip" => "192.168.56.111"},
+      "jlefondeS" => {"internal_ip" => "192.168.56.110"},
+      "jlefondeSW" => {"internal_ip" => "192.168.56.111"},
     }
   end
 end
