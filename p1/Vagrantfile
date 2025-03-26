@@ -31,7 +31,10 @@ Vagrant.configure("2") do |config|
       "servers" => ["jlefondeS"],
       "workers" => ["jlefondeSW"],
     }
-    ansible.vault_password_file = "~/.ansible/.vault_pass.txt"
+    ansible.host_vars = {
+      "jlefondeS" => {"host_ip" => "192.168.56.110"},
+      "jlefondeSW" => {"host_ip" => "192.168.56.111"},
+    }
     ansible.verbose = "-vvv"
   end
 end

@@ -12,9 +12,6 @@
 - hosts: servers
   become: true
  
-  vars_files:
-    - vars/vault.yml
-
   tasks:
     - name: Ensure K3s is running in server mode
       ansible.builtin.shell:
@@ -24,22 +21,19 @@
 
 - hosts: workers
   become: true
-  
-  vars_files:
-    - vars/vault.yml
 
   tasks:
     - name: Retrieve K3s token from server
       ansible.builtin.shell:
         cmd: "cat /var/lib/rancher/k3s/server/node-token"
       register: k3s_token
-      delegate_to: "{{ hostvars['jlefondeS']['ansible_host'] }}"
+      delegate_to: "{{ hostvars['jlefondeS']['host_ip'] }}"
 
     - name: Ensure K3s is running in agent mode
       ansible.builtin.shell:
         cmd: "/usr/local/bin/k3s.sh"
       environment:
-        K3S_URL: "https://{{ hostvars['jlefondeS']['ansible_host'] }}:6443"
+        K3S_URL: "https://{{ hostvars['jlefondeS']['host_ip'] }}:6443"
         K3S_TOKEN: "{{ k3s_token }}"
         INSTALL_K3S_EXEC: "--flannel-iface eth1"
 
