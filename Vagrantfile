@@ -2,11 +2,11 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/focal64"
+  config.vm.box = "debian/bullseye64"
 
   config.vm.provider :virtualbox do |vb|
     vb.cpus = 1
-    vb.memory = 512
+    vb.memory = 1024
   end
 
   config.vm.define :jlefondeS do |jlefondeS|
@@ -31,6 +31,7 @@ Vagrant.configure("2") do |config|
       "servers" => ["jlefondeS"],
       "workers" => ["jlefondeSW"],
     }
+    ansible.vault_password_file = "~/.ansible/.vault_pass.txt"
     ansible.verbose = "-vvv"
   end
 end
