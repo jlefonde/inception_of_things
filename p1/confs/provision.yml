@@ -23,6 +23,12 @@
   become: true
 
   tasks:
+    - name: Wait for K3s server to be ready
+      ansible.builtin.wait_for:
+        path: "/var/lib/rancher/k3s/server/node-token"
+        timeout: 30
+      delegate_to: "{{ groups['servers'][0] }}"
+
     - name: Retrieve K3s token from server
       ansible.builtin.shell:
         cmd: "cat /var/lib/rancher/k3s/server/node-token"
