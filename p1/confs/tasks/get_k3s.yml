@@ -1,0 +1,6 @@
+---
+- name: Ensure the k3s.sh file exists
+  ansible.builtin.get_url:
+    url: https://get.k3s.io 
+    dest: "/usr/local/bin/k3s.sh"
+    mode: '0544'

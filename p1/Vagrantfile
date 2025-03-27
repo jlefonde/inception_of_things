@@ -34,8 +34,8 @@ Vagrant.configure("2") do |config|
   config.vm.provision :ansible do |ansible|
     ansible.playbook = "./confs/provision.yml"
     ansible.groups = {
-      "servers" => [SERVER],
-      "workers" => [WORKER],
+      "server" => [SERVER],
+      "worker" => [WORKER],
     }
     ansible.host_vars = {
       SERVER => {"internal_ip" => SERVER_IP},
