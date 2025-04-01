@@ -1,0 +1,7 @@
+---
+- name: Fetch the kubeconfig file
+  ansible.builtin.fetch:
+    src: /etc/rancher/k3s/k3s.yaml
+    dest: "{{ outfile }}"
+    mode: 0600
+    flat: true

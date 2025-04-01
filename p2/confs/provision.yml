@@ -1,0 +1,29 @@
+---
+- name: Setup K3s server
+  hosts: server
+  become: true
+
+  vars:
+    outfile: ../k3s.yml
+
+  pre_tasks:
+    - ansible.builtin.import_tasks: 
+        file: tasks/get_k3s.yml
+
+  tasks:
+    - name: Ensure K3s is running in server mode
+      ansible.builtin.shell:
+        cmd: "/usr/local/bin/k3s.sh"
+      environment:
+        INSTALL_K3S_EXEC: "--flannel-iface eth1"
+
+    - ansible.builtin.include_tasks: 
+        file: tasks/fetch_k3s_conf.yml
+
+    - name: Update server IP in K3s config
+      ansible.builtin.replace:
+        path: "{{ outfile }}"
+        regexp: 'https://127.0.0.1:6443'
+        replace: "https://{{ internal_ip }}:6443"
+      delegate_to: localhost
+      become: false

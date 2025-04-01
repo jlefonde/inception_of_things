@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+SERVER = "jlefondeS"
+SERVER_IP = "192.168.56.110"
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "debian/bookworm64"
+
+  config.vm.provider :virtualbox do |vb|
+    vb.cpus = 1
+    vb.memory = 1024
+  end
+
+  config.vm.define SERVER do |server|
+    server.vm.hostname = SERVER
+    server.vm.network "private_network", ip: SERVER_IP
+    server.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--name", SERVER]
+    end
+  end
+
+  config.vm.provision :ansible do |ansible|
+    ansible.playbook = "./confs/provision.yml"
+    ansible.groups = {
+      "server" => [SERVER],
+    }
+    ansible.host_vars = {
+      SERVER => {"internal_ip" => SERVER_IP},
+    }
+  end
+end

@@ -1,2 +1,4 @@
 .vagrant
 .vscode
+.venv
+k3s.yml
