@@ -3,57 +3,14 @@
   hosts: server
   become: true
 
-  vars:
-    outfile: ../k3s.yml
-
-  pre_tasks:
-    - ansible.builtin.import_tasks: 
-        file: tasks/get_k3s.yml
-
-  tasks:
-    - name: Ensure K3s is running in server mode
-      ansible.builtin.shell:
-        cmd: "/usr/local/bin/k3s.sh"
-      environment:
-        INSTALL_K3S_EXEC: "--flannel-iface eth1"
-
-    - ansible.builtin.include_tasks: 
-        file: tasks/fetch_k3s_conf.yml
-
-    - name: Update server IP in K3s config
-      ansible.builtin.replace:
-        path: "{{ outfile }}"
-        regexp: 'https://127.0.0.1:6443'
-        replace: "https://{{ internal_ip }}:6443"
-      delegate_to: localhost
-      become: false
+  roles:
+    - role: common
+    - role: k3s_server
 
 - name: Setup K3s worker
   hosts: worker
   become: true
 
-  pre_tasks:
-    - ansible.builtin.import_tasks: 
-        file: tasks/get_k3s.yml
-
-  tasks:
-    - name: Wait for K3s server node-token file to exist
-      ansible.builtin.wait_for:
-        path: "/var/lib/rancher/k3s/server/node-token"
-        timeout: 30
-      delegate_to: "{{ groups['server'][0] }}"
-
-    - name: Retrieve K3s token from server
-      ansible.builtin.shell:
-        cmd: "cat /var/lib/rancher/k3s/server/node-token"
-      register: k3s_token
-      delegate_to: "{{ groups['server'][0] }}"
-
-    - name: Ensure K3s is running in agent mode
-      ansible.builtin.shell:
-        cmd: "/usr/local/bin/k3s.sh"
-      environment:
-        K3S_URL: "https://{{ hostvars['jlefondeS']['internal_ip'] }}:6443"
-        K3S_TOKEN: "{{ k3s_token.stdout }}"
-        INSTALL_K3S_EXEC: "--flannel-iface eth1"
-
+  roles:
+    - role: common
+    - role: k3s_worker

@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: jlefonde
-  description: Setup a K3s server
+  description: Setup a common configuration for k3s server and worker
   license: license (GPL-2.0-or-later, MIT, etc)
   min_ansible_version: 2.1
   galaxy_tags: []

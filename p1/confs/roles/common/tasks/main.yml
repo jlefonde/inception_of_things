@@ -1,0 +1,17 @@
+---
+- name: Update apt package cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Ensure curl is installed
+  ansible.builtin.apt:
+    name:
+      - curl
+    state: present
+
+- name: Ensure the k3s.sh file exists
+  ansible.builtin.get_url:
+    url: https://get.k3s.io 
+    dest: "/usr/local/bin/k3s.sh"
+    mode: '0544'

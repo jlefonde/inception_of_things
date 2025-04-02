@@ -20,17 +20,4 @@
     replace: "https://{{ internal_ip }}:6443"
   delegate_to: localhost
   become: false
-
-- name: Ensure the deployments and ingress are applied
-  kubernetes.core.k8s:
-    src: "{{ role_path }}/files/{{ item }}"
-    state: present
-    namespace: default
-    kubeconfig: "{{ outfile }}"
-  loop:
-    - app1_deployment.yml
-    - app2_deployment.yml
-    - app3_deployment.yml
-    - ingress.yml
-  delegate_to: localhost
-  become: false
+  

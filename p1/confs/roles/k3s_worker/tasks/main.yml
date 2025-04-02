@@ -1,0 +1,20 @@
+---
+- name: Wait for K3s server node-token file to exist
+  ansible.builtin.wait_for:
+    path: "/var/lib/rancher/k3s/server/node-token"
+    timeout: 30
+  delegate_to: "{{ groups['server'][0] }}"
+
+- name: Retrieve K3s token from server
+  ansible.builtin.shell:
+    cmd: "cat /var/lib/rancher/k3s/server/node-token"
+  register: k3s_token
+  delegate_to: "{{ groups['server'][0] }}"
+
+- name: Ensure K3s is running in agent mode
+  ansible.builtin.shell:
+    cmd: "/usr/local/bin/k3s.sh"
+  environment:
+    K3S_URL: "https://{{ hostvars['jlefondeS']['internal_ip'] }}:6443"
+    K3S_TOKEN: "{{ k3s_token.stdout }}"
+    INSTALL_K3S_EXEC: "--flannel-iface eth1"
