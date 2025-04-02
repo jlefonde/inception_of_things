@@ -1,0 +1,36 @@
+---
+- name: Ensure K3s is running in server mode
+  ansible.builtin.shell:
+    cmd: "/usr/local/bin/k3s.sh"
+  environment:
+    INSTALL_K3S_EXEC: "--flannel-iface eth1"
+    K3S_KUBECONFIG_MODE: "644"
+
+- name: Fetch the kubeconfig file
+  ansible.builtin.fetch:
+    src: /etc/rancher/k3s/k3s.yaml
+    dest: "{{ outfile }}"
+    mode: 0600
+    flat: true
+
+- name: Update server IP in K3s config
+  ansible.builtin.replace:
+    path: "{{ outfile }}"
+    regexp: 'https://127.0.0.1:6443'
+    replace: "https://{{ internal_ip }}:6443"
+  delegate_to: localhost
+  become: false
+
+- name: Ensure the deployments and ingress are applied
+  kubernetes.core.k8s:
+    src: "{{ role_path }}/files/{{ item }}"
+    state: present
+    namespace: default
+    kubeconfig: "{{ outfile }}"
+  loop:
+    - app1_deployment.yml
+    - app2_deployment.yml
+    - app3_deployment.yml
+    - ingress.yml
+  delegate_to: localhost
+  become: false
