@@ -18,3 +18,4 @@
     K3S_URL: "https://{{ hostvars['jlefondeS']['internal_ip'] }}:6443"
     K3S_TOKEN: "{{ k3s_token.stdout }}"
     INSTALL_K3S_EXEC: "--flannel-iface eth1"
+  when: ansible_facts['services']['k3s.service']['state'] | default('not-found') != "running"

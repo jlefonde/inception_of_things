@@ -15,3 +15,6 @@
     url: https://get.k3s.io 
     dest: "/usr/local/bin/k3s.sh"
     mode: '0544'
+
+- name: Retrieve services facts
+  ansible.builtin.service_facts:
