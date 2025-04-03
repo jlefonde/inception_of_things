@@ -1,2 +1,2 @@
 ---
-outfile: ../k3s.yml
+kubeconfig: ../k3s.yml

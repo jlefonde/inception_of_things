@@ -2,51 +2,41 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: app-one
+  name: app-two
 data:
   index.html: |
     <!DOCTYPE html>
     <html lang="en">
       <head>
-          <title>Hello from app1.com</title>
+          <title>Hello from app2.com</title>
       </head>
       <body>
-          <h1>Hello from app1.com<h1>
+          <h1>Hello from app2.com<h1>
       </body>
     </html>
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: app-one
-spec:
-  selector:
-    app: app-one
-  ports:
-    - port: 80
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-one
+  name: app-two
 spec:
   selector:
     matchLabels:
-      app: app-one
+      app: app-two
   template:
     metadata:
       labels:
-        app: app-one
+        app: app-two
     spec:
       containers:
-        - name: app-one
+        - name: app-two
           image: nginx:1.27-alpine
           ports:
             - containerPort: 80
           volumeMounts:
-              - name: app-one-config
+              - name: app-two-config
                 mountPath: /usr/share/nginx/html
       volumes:
-        - name: app-one-config
+        - name: app-two-config
           configMap:
-            name: app-one
+            name: app-two

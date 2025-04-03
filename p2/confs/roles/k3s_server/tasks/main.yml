@@ -9,28 +9,33 @@
 - name: Fetch the kubeconfig file
   ansible.builtin.fetch:
     src: /etc/rancher/k3s/k3s.yaml
-    dest: "{{ outfile }}"
+    dest: "{{ kubeconfig }}"
     mode: 0600
     flat: true
 
 - name: Update server IP in K3s config
   ansible.builtin.replace:
-    path: "{{ outfile }}"
+    path: "{{ kubeconfig }}"
     regexp: 'https://127.0.0.1:6443'
     replace: "https://{{ internal_ip }}:6443"
   delegate_to: localhost
   become: false
 
-- name: Ensure the deployments and ingress are applied
+- name: Find all resource config files
+  ansible.builtin.find:
+    paths: "{{ role_path }}/files/apps/"
+    patterns: "*.yml"
+    recurse: yes
+  register: config_files
+  delegate_to: localhost
+  become: false
+
+- name: Ensure all resource configs are applied
   kubernetes.core.k8s:
-    src: "{{ role_path }}/files/{{ item }}"
+    src: "{{ item.path }}"
     state: present
     namespace: default
-    kubeconfig: "{{ outfile }}"
-  loop:
-    - app1_deployment.yml
-    - app2_deployment.yml
-    - app3_deployment.yml
-    - ingress.yml
+    kubeconfig: "{{ kubeconfig }}"
+  loop: "{{ config_files.files }}"
   delegate_to: localhost
   become: false

@@ -9,13 +9,13 @@
 - name: Fetch the kubeconfig file
   ansible.builtin.fetch:
     src: /etc/rancher/k3s/k3s.yaml
-    dest: "{{ outfile }}"
+    dest: "{{ kubeconfig }}"
     mode: 0600
     flat: true
 
 - name: Update server IP in K3s config
   ansible.builtin.replace:
-    path: "{{ outfile }}"
+    path: "{{ kubeconfig }}"
     regexp: 'https://127.0.0.1:6443'
     replace: "https://{{ internal_ip }}:6443"
   delegate_to: localhost
