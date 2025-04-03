@@ -22,7 +22,7 @@ spec:
             - name: app-three-html
               mountPath: /usr/share/nginx/html
             - name: app-three-html-template
-              mountPath: /etc/nginx/templates
+              mountPath: /usr/share/nginx/html/templates
           env: 
             - name: POD_NAME
               valueFrom:
@@ -31,7 +31,7 @@ spec:
           args:
             - /bin/sh
             - -c
-            - 'sed "s/{{ POD_NAME }}/$POD_NAME/g" /etc/nginx/templates/index.html.template > /usr/share/nginx/html/index.html && exec nginx -g "daemon off;"'
+            - 'sed "s/{{ POD_NAME }}/$POD_NAME/g" /usr/share/nginx/html/templates/index.html.template > /usr/share/nginx/html/index.html && exec nginx -g "daemon off;"'
       volumes:
         - name: app-three-html-template
           configMap:
