@@ -24,21 +24,19 @@
   delegate_to: localhost
   become: false
 
-- name: Find all resource config files
-  ansible.builtin.find:
-    paths: "{{ role_path }}/files/apps/"
-    patterns: "*.yml"
-    recurse: yes
-  register: config_files
+- name: Ensure all kustomize configs are applied
+  kubernetes.core.k8s:
+    definition: "{{ lookup('kubernetes.core.kustomize', dir=role_path + '/files/apps/' ) }}"
+    namespace: default
+    kubeconfig: "{{ kubeconfig }}"
   delegate_to: localhost
   become: false
 
-- name: Ensure all resource configs are applied
+- name: Ensure ingress config is applied
   kubernetes.core.k8s:
-    src: "{{ item.path }}"
+    src: "{{ role_path }}/files/apps/ingress.yml"
     state: present
     namespace: default
     kubeconfig: "{{ kubeconfig }}"
-  loop: "{{ config_files.files }}"
   delegate_to: localhost
   become: false
