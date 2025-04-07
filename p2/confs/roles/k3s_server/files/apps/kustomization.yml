@@ -1,3 +1,4 @@
+---
 resources:
   - app1/configmap.yml
   - app1/deployment.yml
@@ -8,3 +9,4 @@ resources:
   - app3/configmap.yml
   - app3/deployment.yml
   - app3/service.yml
+  - ingress.yml
