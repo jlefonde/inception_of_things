@@ -1,0 +1,17 @@
+---
+resources:
+  - ../../base
+
+patches:
+  - path: configmap_patch.yml
+    target:
+      kind: ConfigMap
+      name: app
+  - path: deployment_patch.yml
+    target:
+      kind: Deployment
+      name: app
+  - path: service_patch.yml
+    target:
+      kind: Service
+      name: app

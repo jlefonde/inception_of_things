@@ -2,26 +2,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-three
+  name: app
 spec:
-  replicas: 3
   selector:
     matchLabels:
-      app: app-three
+      app: app
   template:
     metadata:
       labels:
-        app: app-three
+        app: app
     spec:
       containers:
-        - name: app-three
+        - name: app
           image: nginx:1.27-alpine
           ports:
             - containerPort: 80
           volumeMounts:
-            - name: app-three-html
+            - name: app-html
               mountPath: /usr/share/nginx/html
-            - name: app-three-html-template
+            - name: app-html-template
               mountPath: /usr/share/nginx/html/templates
           env: 
             - name: POD_NAME
@@ -33,8 +32,8 @@ spec:
             - -c
             - 'sed "s/{{ POD_NAME }}/$POD_NAME/g" /usr/share/nginx/html/templates/index.html.template > /usr/share/nginx/html/index.html && exec nginx -g "daemon off;"'
       volumes:
-        - name: app-three-html-template
+        - name: app-html-template
           configMap:
-            name: app-three
-        - name: app-three-html
+            name: app
+        - name: app-html
           emptyDir: {}

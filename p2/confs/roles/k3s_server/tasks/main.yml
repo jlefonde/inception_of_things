@@ -24,9 +24,9 @@
   delegate_to: localhost
   become: false
 
-- name: Ensure all kustomize configs are applied
+- name: Create kubernetes resources for lookup output with `--enable-helm` set
   kubernetes.core.k8s:
-    definition: "{{ lookup('kubernetes.core.kustomize', dir=role_path + '/files/apps/' ) }}"
+    definition: "{{ lookup('kubernetes.core.kustomize', dir=role_path + '/files/apps/overlays/app1/') }}"
     namespace: default
     kubeconfig: "{{ kubeconfig }}"
   delegate_to: localhost
