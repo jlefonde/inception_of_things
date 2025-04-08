@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: app-three
+  name: app-three-config
 data:
   index.html.template: |
     <!DOCTYPE html>

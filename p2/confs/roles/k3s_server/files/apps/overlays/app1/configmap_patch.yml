@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: app-one
+  name: app-one-config
 data:
   index.html.template: |
     <!DOCTYPE html>
