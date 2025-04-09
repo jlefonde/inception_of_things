@@ -3,3 +3,4 @@
 .venv
 k3s.yml
 argocd_password.txt
+gitlab_password.txt
