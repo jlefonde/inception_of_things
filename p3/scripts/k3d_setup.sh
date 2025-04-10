@@ -20,9 +20,9 @@ echo -e "${BOLD_GREEN}[3/8] Installing argocd${RESET}"
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 echo -e "${BOLD_GREEN}[4/8] Waiting for argocd-initial-admin-secret to be created...${RESET}"
-kubectl wait -n argocd --for=create secret argocd-initial-admin-secret --timeout=60s
+kubectl wait -n argocd --for=create secret argocd-initial-admin-secret --timeout=120s
 
-echo -e "${BOLD_GREEN}[7/8] Getting argocd password${RESET}"
+echo -e "${BOLD_GREEN}[5/8] Getting argocd password${RESET}"
 kubectl get -n argocd secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d > ../argocd_password.txt
 
 echo -e "${BOLD_GREEN}[6/8] Waiting for argocd pods to be ready...${RESET}"

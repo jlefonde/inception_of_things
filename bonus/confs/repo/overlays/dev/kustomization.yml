@@ -1,0 +1,8 @@
+---
+bases:
+  - ../../base
+
+namespace: dev
+
+resources:
+  - namespace.yml
