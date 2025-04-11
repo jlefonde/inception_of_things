@@ -7,7 +7,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://gitlab.app.com/root/inception_of_things_conf
+    repoURL: http://gitlab-webservice-default.gitlab.svc:8181/root/inception_of_things_conf.git
     targetRevision: HEAD
     path: overlays/dev
   destination:
