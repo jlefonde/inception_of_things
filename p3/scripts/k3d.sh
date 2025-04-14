@@ -6,7 +6,6 @@ source ./utils/constants.sh
 
 COLOR="${1:-${BOLD_GREEN}}"
 
-
 echo -e "${COLOR}[k3d: 1/3] Installing k3d${RESET}"
 curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 
