@@ -1,14 +1,20 @@
 ---
 global:
-  edition: ce
-  ingress:
-    configureCertmanager: false
-    class: traefik
-  hosts:
-    domain: app.com
-    externalIP: 0.0.0.0
-    https: false
+    edition: ce
+    ingress:
+        configureCertmanager: false
+        class: traefik
+    hosts:
+        domain: app.com
+        externalIP: 0.0.0.0
+        https: false
 certmanager:
-  install: false
+    install: false
+prometheus:
+    install: false
+gitlab-runner:
+    install: false
+gitlab-exporter:
+    install: false
 nginx-ingress:
-  enabled: false
+    enabled: false
