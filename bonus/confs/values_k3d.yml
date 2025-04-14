@@ -6,6 +6,8 @@ global:
     class: traefik
   hosts:
     domain: app.com
+    externalIP: 0.0.0.0
+    https: false
 certmanager:
   install: false
 nginx-ingress:

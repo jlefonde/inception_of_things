@@ -20,5 +20,5 @@ echo -e "${ARGOCD_COLOR}=============== argocd ===============${RESET}"
 ./argocd.sh "${ARGOCD_COLOR}"
 echo -e "${ARGOCD_COLOR}✓ argocd successfully installed${RESET}\n"
 
-echo -e "${GITLAB_COLOR}→ access gitlab at: https://localhost:${GITLAB_PORT}${RESET}"
+echo -e "${GITLAB_COLOR}→ access gitlab at: http://localhost:${GITLAB_PORT}${RESET}"
 echo -e "${ARGOCD_COLOR}→ access argocd at: https://localhost:${ARGOCD_PORT}${RESET}"

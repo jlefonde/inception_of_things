@@ -9,7 +9,7 @@ COLOR="${1:-${BOLD_GREEN}}"
 echo -e "${COLOR}[argocd: 1/6] Creating argocd namespace${RESET}"
 kubectl create namespace argocd
 
-echo -e "${COLOR}[argocd: 2/6] Installing argocd in ${CLUSTER_NAME} cluster${RESET}"
+echo -e "${COLOR}[argocd: 2/6] Installing argocd${RESET}"
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 echo -e "${COLOR}[argocd: 3/6] Waiting for argocd pods to be ready...${RESET}"
