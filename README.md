@@ -1,4 +1,4 @@
-# inception-of-things
+# inception-of-things 
 
 A comprehensive exploration of Kubernetes orchestration using K3s and K3d. This project progresses from basic multi-node cluster setup using virtualization to advanced GitOps workflows with Argo CD and self-hosted GitLab.
 
@@ -10,7 +10,7 @@ This project follows the 42 School curriculum and is divided into three mandator
 * **Multi-Node Clusters**: Implementing a Controller-Agent (Master/Worker) architecture in Part 1.
 * **Ingress Routing**: Managing traffic for three applications based on Host headers (`app1.com`, `app2.com`) with a default fallback to App 3.
 * **GitOps Continuous Delivery**: Automating deployments with Argo CD to synchronize cluster state with a dedicated configuration repository.
-* **Separation of Concerns**: Uses two repositories—one for the setup logic and another (inception_of_things_conf) strictly for K8s manifests.
+* **Separation of Concerns**: Uses two repositories - one for the setup logic and another (inception-of-things-conf) strictly for K8s manifests.
 * **Private Cloud (Bonus)**: Self-hosting a complete GitLab instance within the cluster via Helm.
 
 ## 🏗️ Project Structure
